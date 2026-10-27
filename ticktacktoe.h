@@ -17,7 +17,7 @@ typedef enum {
 	GAME_PLAYING
 }gameState;
 
-Board* createBoard();
+Board* createBoard(void);
 
 void drawBoard(Board* board);
 

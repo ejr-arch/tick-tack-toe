@@ -29,10 +29,8 @@ void play(Board* board, char player, int position)
 	board->emptyCells--;
 }
 
-void nextPlayer(char player){
-	if(player=='X')
-		player = 'O';
-	else player = 'X';
+char nextPlayer(char player){
+	return player == 'X'? 'O': 'X';
 }
 
 bool isBoardFull(Board* board){

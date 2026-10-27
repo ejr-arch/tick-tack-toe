@@ -76,7 +76,7 @@ int main(){
 				break;
 
 			case GAME_PLAYING:
-				nextPlayer(player);
+				player = nextPlayer(player);
 				printf("Player %c's turn\n",player);
 				drawBoard(board);
 				continue;

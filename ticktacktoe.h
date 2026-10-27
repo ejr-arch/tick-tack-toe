@@ -33,6 +33,6 @@ gameState checkGameState(Board* board);
 
 inputState checkInput(Board* board, int position);
 
-void nextPlayer(char player);
+char nextPlayer(char player);
 
 void gameClose(Board* board);

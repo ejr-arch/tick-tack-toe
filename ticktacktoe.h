@@ -1,7 +1,7 @@
 #include <stdbool.h>
 
 typedef struct{
-	char board[9];
+	char cells[9];
 	int emptyCells;
 }Board;
 
@@ -25,7 +25,11 @@ void play(Board* board, char player, int position);
 
 bool isBoardFull(Board* board);
 
-gameState checkGameState(const Board* board);
+bool isDraw(Board* board);
+
+bool isWin(Board* board);
+
+gameState checkGameState(Board* board);
 
 inputState checkInput(Board* board, int position);
 

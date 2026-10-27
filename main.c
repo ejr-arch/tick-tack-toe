@@ -3,7 +3,7 @@
 
 
 int main(){
-	char* player = createPlayer();
+	char player = 'X';
 
 	int position;
 	Board* board = createBoard();
@@ -12,10 +12,10 @@ int main(){
 	
 	while(1){
 
-		printf("Player %c enter position: ",player[0]);
+		printf("Player %c enter position: ",player);
 		scanf("%d",&position);
 
-		if(inputError(board, position) == 1){
+		/*if(inputError(board, position) == 1){
 			printf("wrong input, try again!!\n");
 			continue;
 		}
@@ -23,29 +23,64 @@ int main(){
 		if(inputError(board, position)==-1){
 			printf("position occupied already!!\n");
 			continue;
+		}*/
+
+		switch(checkInput(board,position)){
+			case INPUT_OUT_OF_RANGE:
+				printf("input out of range, try again!!\n");
+				continue;
+				break;
+
+			case INPUT_OCCUPIED:
+				printf("position occupied already, try again!!\n");
+				continue;
+				break;
+
+			case INPUT_OK:
+				break;
 		}
 
 		play(board, player, position);
 		
-
-		if(isDraw(board)){
+		/*if(isDraw(board)){
 			drawBoard(board);
 			printf("GAME IS A DRAW\n");
-			gameClose(board, player);	
+			gameClose(board);	
 			break;
 		}
 
 		if(isWin(board)){
 			drawBoard(board);
-			printf("PLAYER %c WINS\n",player[0]);
-			gameClose(board, player);
+			printf("PLAYER %c WINS\n",player);
+			gameClose(board);
 			break;
 		}
 		else{
 			nextPlayer(player);
-			printf("Player %c's turn\n",player[0]);
+			printf("Player %c's turn\n",player);
 			drawBoard(board);
 			continue;
+		}*/
+
+		switch(checkGameState(board)){
+			case GAME_WON:
+				drawBoard(board);
+				printf("PLAYER %c WINS\n",player);
+				gameClose(board);
+				break;
+
+			case GAME_DRAW:
+				drawBoard(board);
+				printf("GAME IS A DRAW\n");
+				gameClose(board);	
+				break;
+
+			case GAME_PLAYING:
+				nextPlayer(player);
+				printf("Player %c's turn\n",player);
+				drawBoard(board);
+				continue;
+				break;
 		}
 	}
 

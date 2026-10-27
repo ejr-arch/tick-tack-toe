@@ -1,31 +1,34 @@
-typedef enum{
-	FALSE=0,
-	TRUE=1
-}boolean;
+#include <stdbool.h>
 
 typedef struct{
-	char* board;
-	int empSpace;
+	char board[9];
+	int emptyCells;
 }Board;
+
+typedef enum {
+	INPUT_OCCUPIED,
+	INPUT_OK,
+	INPUT_OUT_OF_RANGE
+}inputState;
+
+typedef enum {
+	GAME_WON,
+	GAME_DRAW,
+	GAME_PLAYING
+}gameState;
 
 Board* createBoard();
 
-char* createPlayer();
-
 void drawBoard(Board* board);
 
-void play(Board* board, char* player, int position);
+void play(Board* board, char player, int position);
 
-boolean isBoardFull(Board* board);
+bool isBoardFull(Board* board);
 
-boolean isWin(Board* board);
+gameState checkGameState(const Board* board);
 
-boolean isDraw(Board* board);
+inputState checkInput(Board* board, int position);
 
-//boolean isGameOver(char* board);
+void nextPlayer(char player);
 
-int inputError(Board* board, int position);
-
-void nextPlayer(char* player);
-
-void gameClose(Board* board, char* player);
+void gameClose(Board* board);

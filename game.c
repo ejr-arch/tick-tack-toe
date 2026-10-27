@@ -5,15 +5,16 @@
 Board* createBoard(){
 	Board* board = (Board*)malloc(sizeof(Board));
 	for(int i=0;i<9;i++)board->board[i]=' ';
-	board->empSpace = 9;
+	board->emptyCells = 9;
 	return board;
 }
 
-char* createPlayer(){
+/*char* createPlayer(){
 	char* player = malloc(sizeof(char));
 	player[0] = 'O';
 	return player;
 }
+*/
 void drawBoard(Board* board)
 {	
 
@@ -22,24 +23,29 @@ void drawBoard(Board* board)
 }
 
 
-void play(Board* board, char* player, int position)
+void play(Board* board, char player, int position)
 {
-	board->board[position-1] = *player;
-	board->empSpace--;
+	board->board[position-1] = player;
+	board->emptyCells--;
 }
 
-void nextPlayer(char* player){
-	if(player[0]=='X')
-		player[0] = 'O';
-	else player[0] = 'X';
+void nextPlayer(char player){
+	if(player=='X')
+		player = 'O';
+	else player = 'X';
 }
 
-boolean isBoardFull(Board* board){
-	if(board->empSpace == 0)return 1;
+bool isBoardFull(Board* board){
+	if(board->emptyCells == 0)return 1;
 	return 0;
 }
 
-boolean isWin(Board* board)
+gameState checkGameState(const Board* board){
+	
+}
+
+
+/*bool isWin(Board* board)
 {
 	//horizontally - 3 rows
 	if(board->board[0]==board->board[1]){
@@ -97,29 +103,30 @@ boolean isWin(Board* board)
 	return 0;
 }
 
-boolean isDraw(Board* board){
+bool isDraw(Board* board){
 	if(isBoardFull(board)&&!isWin(board))return 1;
+	return 0;
+	if(checkGameState(board)== GAME_DRAW) return 1;
 	return 0;
 }
 
-/*boolean isGameOver(char* board){
+bool isGameOver(char* board){
 	if(isWin(board) || isDraw(board))return 1;
 	return 0;
 }*/
 
-int inputError(Board* board,int position)
+inputState checkInput(Board* board,int position)
 {
 	if(board->board[position-1]!=' ')
-		return -1;
+		return INPUT_OCCUPIED;
 
 	if(position>9||position<1)
-		return 1;
+		return INPUT_OUT_OF_RANGE;
 		
-	return 0;
+	return INPUT_OK;
 }
 
-void gameClose(Board* board, char* player){
-	free(board->board);
-	free(player);
+void gameClose(Board* board){
+	free(board);
 }
 
